@@ -2,172 +2,118 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>iTunes Mini Player</title>
+    <title>Modern Premium Mini Player</title>
     <style>
-        /* 전체 배경 */
+        /* 1. 디자인 영역: 모던 다크 그라데이션 */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #e0e4e5;
+            background-color: #1a1a1a; /* 전체 배경은 짙은 그레이 */
             margin: 0;
         }
 
-        /* 맥 윈도우 창 (딱 맞게 크기 축소) */
-        .mac-window {
-            background-color: #e8e8e8;
-            width: 750px;
-            /* 높이를 지정하지 않고 내용물에 맞게 자동으로 줄어들게 설정 */
-            border-radius: 6px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 1px solid #999;
-            overflow: hidden;
-        }
-
-        /* 상단 타이틀 바 (신호등 버튼) */
-        .window-titlebar {
-            background: linear-gradient(to bottom, #f4f5f5 0%, #d1d3d4 100%);
-            height: 22px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #999;
-            position: relative;
-        }
-
-        .titlebar-icons {
-            display: flex;
-            gap: 8px;
-            padding-left: 12px;
-        }
-
-        .titlebar-icon {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.5), 0 1px 1px rgba(0,0,0,0.2);
-        }
-
-        .icon-close { background-color: #ff5f57; border: 1px solid #e33e32; }
-        .icon-minimize { background-color: #ffbd2e; border: 1px solid #e09e1d; }
-        .icon-maximize { background-color: #28c940; border: 1px solid #1fa733; }
-
-        /* 플레이어 컨트롤 영역 */
-        .top-toolbar {
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* 1. 왼쪽: 재생 버튼들 */
-        .playback-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .mac-btn {
-            background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
-            border: 1px solid #999;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            color: #444;
-            font-size: 12px;
-            cursor: pointer;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .mac-btn:active {
-            background: linear-gradient(to bottom, #d0d0d0 0%, #f0f0f0 100%);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        #playPauseBtn {
-            width: 40px;
-            height: 40px;
-            font-size: 16px;
-        }
-
-        /* 2. 중앙: LCD 디스플레이 */
-        .lcd-display {
-            background: linear-gradient(to bottom, #f2f7e6 0%, #dce5c6 100%);
-            border: 1px solid #777;
-            border-radius: 4px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.8);
-            width: 380px;
-            height: 55px;
+        /* 플레이어 컨테이너 (둥근 모서리, 그림자, 다크 그라데이션) */
+        .modern-player {
+            background: linear-gradient(to bottom, #2d1341 0%, #1a0a28 100%); /* 보라색/네이비 다크 그라데이션 */
+            width: 380px; /* 미니 플레이어 크기 */
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            padding: 20px 25px;
+            color: white;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 0 15px;
+            gap: 15px;
         }
 
-        .lcd-text-area {
+        /* 1.1 곡 정보 (상단 중앙) */
+        .info-area {
             text-align: center;
-            margin-bottom: 4px;
-            line-height: 1.2;
         }
 
-        .lcd-title { font-size: 13px; font-weight: bold; color: #222; }
-        .lcd-artist { font-size: 11px; color: #555; }
+        /* 👇 여기에 곡 제목과 아티스트를 적으세요! 👇 */
+        .lcd-title { font-size: 14px; font-weight: bold; margin-bottom: 2px; }
+        .lcd-artist { font-size: 11px; color: #aaaaaa; }
 
-        .lcd-progress-area {
+        /* 1.2 진행 바 및 시간 (중앙) */
+        .progress-area {
             display: flex;
             align-items: center;
             width: 100%;
-            gap: 8px;
+            gap: 10px;
         }
 
         .lcd-time {
             font-size: 10px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            color: #333;
+            color: #aaaaaa;
             width: 35px;
             text-align: center;
         }
 
-        /* 진행 바 디자인 */
+        /* 얇고 모던한 진행 바 디자인 */
         input[type=range] {
             flex: 1;
             -webkit-appearance: none;
             background: transparent;
-            height: 10px;
+            height: 8px;
         }
 
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
-            height: 6px;
-            background: #a9b993;
-            border-radius: 3px;
-            border: 1px solid #8b9977;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1); /* 얇고 짙은 트랙 */
+            border-radius: 2px;
         }
 
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 12px;
-            width: 12px;
+            height: 10px;
+            width: 10px;
             border-radius: 50%;
-            background: #ffffff;
-            border: 1px solid #555;
-            margin-top: -4px;
+            background: #ffffff; /* 흰색 슬라이더 thumb */
+            margin-top: -3px;
             cursor: pointer;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
-        /* 3. 오른쪽: 볼륨 및 배속 */
-        .right-controls {
+        /* 1.3 컨트롤 영역 (하단 중앙) */
+        .control-area {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* 크고 둥근 모던 재생 버튼 */
+        .play-btn {
+            background: linear-gradient(to bottom, #d278ff 0%, #760ffb 100%); /* 보라색 그라데이션 버튼 */
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(118, 15, 251, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .play-btn:active {
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.3);
+        }
+
+        /* 설정 영역 (볼륨, 배속) - 모던한 다크 테마 */
+        .settings-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 5px;
         }
 
         .volume-area {
@@ -175,67 +121,68 @@
             align-items: center;
             gap: 5px;
             font-size: 12px;
-            color: #777;
+            color: #aaaaaa;
         }
 
-        .volume-area input[type=range] { width: 70px; }
-        
+        .volume-area input[type=range] {
+            width: 70px;
+            /* 볼륨 트랙과 thumb는 흰색/밝은 그레이로 */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .volume-area input[type=range]::-webkit-slider-thumb {
+            height: 8px;
+            width: 8px;
+            margin-top: -2px;
+            background: #aaaaaa;
+        }
+
         select {
             font-size: 11px;
-            border: 1px solid #aaa;
-            border-radius: 3px;
-            background: #fff;
-            padding: 2px 4px;
-            color: #333;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3px 6px;
+            color: #aaaaaa;
+            cursor: pointer;
         }
+
     </style>
 </head>
 <body>
 
-    <div class="mac-window">
-        <audio id="myAudio" src="https://raw.githubusercontent.com/Longtail-team/audio-files-test/main/Robin%20Hill%20School%20Book%201.mp3" preload="metadata"></audio>
+    <div class="modern-player">
+        <audio id="myAudio" src="https://raw.githubusercontent.com/Longtail-team/audio-files-test/main/Robin%20Hill%20School%20Book%201.mp3"></audio>
 
-        <div class="window-titlebar">
-            <div class="titlebar-icons">
-                <div class="titlebar-icon icon-close"></div>
-                <div class="titlebar-icon icon-minimize"></div>
-                <div class="titlebar-icon icon-maximize"></div>
-            </div>
+        <div class="info-area">
+            <div class="lcd-title">Flat Stanley Book 1_Chapter 01</div>
+            <div class="lcd-artist">Longtail Books</div>
         </div>
 
-        <div class="top-toolbar">
-            <div class="playback-controls">
-                <button class="mac-btn">⏮</button>
-                <button class="mac-btn" id="playPauseBtn">▶</button>
-                <button class="mac-btn">⏭</button>
-            </div>
+        <div class="progress-area">
+            <span class="lcd-time" id="currentTime">0:00</span>
+            <input type="range" id="progressBar" min="0" value="0" step="1">
+            <span class="lcd-time" id="totalTime">0:00</span>
+        </div>
 
-            <div class="lcd-display">
-                <div class="lcd-text-area">
-                    <div class="lcd-title">Flat Stanley Book 1_Chapter 01</div>
-                    <div class="lcd-artist">Longtail Books</div>
-                </div>
-                <div class="lcd-progress-area">
-                    <span class="lcd-time" id="currentTime">0:00</span>
-                    <input type="range" id="progressBar" min="0" value="0" step="1">
-                    <span class="lcd-time" id="totalTime">0:00</span>
-                </div>
-            </div>
+        <div class="control-area">
+            <button class="play-btn" id="playPauseBtn">▶</button>
+        </div>
 
-            <div class="right-controls">
-                <div class="volume-area">
-                    <span>🔉</span>
-                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
-                    <span>🔊</span>
-                </div>
-                <select id="speedSelect">
-                    <option value="0.5">배속: 0.5x</option>
-                    <option value="0.8">배속: 0.8x</option>
-                    <option value="1.0" selected>배속: 1.0x (기본)</option>
-                    <option value="1.2">배속: 1.2x</option>
-                    <option value="1.5">배속: 1.5x</option>
-                </select>
+        <div class="settings-area">
+            <div class="volume-area">
+                <span>🔉</span>
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                <span>🔊</span>
             </div>
+            <select id="speedSelect">
+                <option value="0.5">배속: 0.5x</option>
+                <option value="0.8">배속: 0.8x</option>
+                <option value="1.0" selected>배속: 1.0x (기본)</option>
+                <option value="1.2">배속: 1.2x</option>
+                <option value="1.5">배속: 1.5x</option>
+            </select>
         </div>
     </div>
 
@@ -248,7 +195,7 @@
         const currentTimeDisplay = document.getElementById('currentTime');
         const totalTimeDisplay = document.getElementById('totalTime');
 
-        // 1. 재생 및 일시정지
+        // 재생 및 일시정지 (디자인 변경됨)
         playPauseBtn.addEventListener('click', function() {
             if (audio.paused) {
                 audio.play();
@@ -259,17 +206,17 @@
             }
         });
 
-        // 2. 볼륨 조절
+        // 볼륨 조절
         volumeSlider.addEventListener('input', function() {
             audio.volume = this.value;
         });
 
-        // 3. 배속 조절
+        // 배속 조절
         speedSelect.addEventListener('change', function() {
             audio.playbackRate = this.value;
         });
 
-        // 4. 시간 포맷 함수
+        // 시간 포맷 함수 (0:00)
         function formatTime(seconds) {
             if (isNaN(seconds)) return "0:00";
             const m = Math.floor(seconds / 60);
@@ -277,26 +224,25 @@
             return m + ":" + (s < 10 ? "0" + s : s);
         }
 
-        // 5. 음원 전체 길이 세팅 (오류 방지를 위해 안전하게 수정)
+        // 음원 전체 길이 세팅
         function setAudioData() {
             progressBar.max = audio.duration;
             totalTimeDisplay.innerText = formatTime(audio.duration);
         }
 
-        // 브라우저가 음악 길이를 이미 알고 있다면 바로 세팅, 아니면 로드될 때까지 기다림
         if (audio.readyState >= 1) {
             setAudioData();
         } else {
             audio.addEventListener('loadedmetadata', setAudioData);
         }
 
-        // 6. 음악 재생 중 시간/진행바 업데이트
+        // 재생 중 시간/진행바 업데이트
         audio.addEventListener('timeupdate', function() {
             progressBar.value = audio.currentTime;
             currentTimeDisplay.innerText = formatTime(audio.currentTime);
         });
 
-        // 7. 진행 바 드래그 시 이동
+        // 진행 바 드래그 시 이동
         progressBar.addEventListener('input', function() {
             audio.currentTime = this.value;
         });
